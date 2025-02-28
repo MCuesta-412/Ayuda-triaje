@@ -1,0 +1,51 @@
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Upload } from "lucide-react";
+
+export default function ChatbotTriaje() {
+  const [input, setInput] = useState("");
+  const [image, setImage] = useState(null);
+  const [response, setResponse] = useState("");
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    setImage(file);
+  };
+
+  const handleSubmit = async () => {
+    if (!input) return;
+    
+    // Simulación de respuesta del chatbot
+    setResponse("Procesando información...");
+    setTimeout(() => {
+      setResponse("Con base en tu descripción, te sugerimos acudir a un centro de salud.");
+    }, 2000);
+  };
+
+  return (
+    <div className="flex flex-col items-center p-4 max-w-md mx-auto">
+      <Card className="w-full p-4 shadow-lg rounded-2xl">
+        <CardContent>
+          <h2 className="text-xl font-semibold mb-2">Chatbot de Triaje Médico</h2>
+          <Textarea
+            placeholder="Describe tus síntomas..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            className="mb-2"
+          />
+          <label className="flex items-center gap-2 cursor-pointer">
+            <Upload className="w-5 h-5" />
+            <span>Subir imagen opcional</span>
+            <Input type="file" className="hidden" onChange={handleImageUpload} />
+          </label>
+          {image && <p className="text-sm mt-1">Imagen seleccionada: {image.name}</p>}
+          <Button className="mt-3 w-full" onClick={handleSubmit}>Enviar</Button>
+          {response && <p className="mt-4 font-medium">{response}</p>}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
