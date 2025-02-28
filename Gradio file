@@ -1,0 +1,28 @@
+import gradio as gr
+
+def clasificar_triaje(sintomas):
+    sintomas = sintomas.lower()
+    
+    urgencias = ["dolor en el pecho", "pérdida de conciencia", "dificultad para respirar", "hemorragia intensa", "parálisis", "convulsiones"]
+    centro_salud = ["fiebre", "tos", "dolor de garganta", "mareo", "dolor de cabeza", "fatiga"]
+    
+    for urg in urgencias:
+        if urg in sintomas:
+            return "⚠️ Urgente: Debes acudir de inmediato a urgencias del hospital más cercano."
+    
+    for centro in centro_salud:
+        if centro in sintomas:
+            return "🔹 Se recomienda acudir al centro de salud para una evaluación médica."
+    
+    return "ℹ️ Si los síntomas persisten o empeoran, consulta con un profesional médico."
+
+iface = gr.Interface(
+    fn=clasificar_triaje,
+    inputs=gr.Textbox(placeholder="Describe tus síntomas..."),
+    outputs=gr.Textbox(),
+    title="Chatbot de Triaje Médico",
+    description="Ingresa tus síntomas y el chatbot te indicará si debes acudir a un centro de salud o a urgencias."
+)
+
+if __name__ == "__main__":
+    iface.launch()
