@@ -18,10 +18,28 @@ export default function ChatbotTriaje() {
   const handleSubmit = async () => {
     if (!input) return;
     
-    // Simulación de respuesta del chatbot
+    // Simulación de respuesta del chatbot basada en síntomas
     setResponse("Procesando información...");
     setTimeout(() => {
-      setResponse("Con base en tu descripción, te sugerimos acudir a un centro de salud.");
+      const lowerInput = input.toLowerCase();
+      
+      if (
+        lowerInput.includes("dolor en el pecho") ||
+        lowerInput.includes("pérdida de conciencia") ||
+        lowerInput.includes("dificultad para respirar") ||
+        lowerInput.includes("hemorragia intensa")
+      ) {
+        setResponse("⚠️ Urgente: Debes acudir de inmediato a urgencias del hospital más cercano.");
+      } else if (
+        lowerInput.includes("fiebre leve") ||
+        lowerInput.includes("tos") ||
+        lowerInput.includes("dolor de garganta") ||
+        lowerInput.includes("mareo leve")
+      ) {
+        setResponse("🔹 Se recomienda acudir al centro de salud para una evaluación médica.");
+      } else {
+        setResponse("ℹ️ Si los síntomas persisten o empeoran, consulta con un profesional médico.");
+      }
     }, 2000);
   };
 
@@ -49,3 +67,4 @@ export default function ChatbotTriaje() {
     </div>
   );
 }
+
